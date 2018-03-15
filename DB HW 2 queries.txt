@@ -1,0 +1,92 @@
+2)Working
+SELECT petName, petType
+FROM Pet;
+
+
+3)Working
+SELECT petName, petType
+FROM Pet
+WHERE dateRegistered BETWEEN '01-JAN-01' AND '31-DEC-01'; 
+
+4)Working
+SELECT sFName, sLName, salary
+FROM Staff
+WHERE salary IN (SELECT MAX(salary) FROM Staff) 
+AND position!='Manager';
+
+5)Working
+SELECT sFName, sLName
+FROM Staff
+WHERE salary > (SELECT AVG(salary) FROM Staff)
+ORDER BY salary DESC;
+
+6)Working
+SELECT AVG(endDate-startDate) AS AverageDays FROM PetTreatment;
+
+7)Working
+SELECT Clinic.clinicNo, city, state, penNo, penStatus
+FROM Clinic, Pen
+WHERE Clinic.clinicNo=Pen.clinicNo;
+
+8)Working
+SELECT sFName, sLName, city
+FROM Staff, Clinic
+WHERE Staff.clinicNo=Clinic.clinicNo
+AND city='Brea';
+
+9)Working
+SELECT oFName, oLName, petType
+FROM PetOwner, Pet
+WHERE PetOwner.ownerNo=Pet.ownerNo
+AND petType='Chihuahua';
+
+10)Working
+SELECT oFName, oLName, city
+FROM PetOwner, Clinic
+WHERE PetOwner.clinicNo=Clinic.clinicNo
+AND city='Fullerton';
+
+11)Working
+SELECT petName, petType, startDate, endDate, cost
+FROM Pet, Treatment, PetTreatment
+WHERE PetTreatment.treatNo=Treatment.treatNo
+AND cost>100 AND endDate-startDate>2;
+
+12)Working
+SELECT sFName, sLName, position
+FROM Staff
+WHERE position='Manager' AND clinicNo=null;
+
+13)Working
+SELECT petName, petType, cost
+FROM Pet, Treatment
+WHERE cost IN (SELECT MAX(cost) FROM Treatment);
+
+14)
+SELECT MAX(COUNT (EXTRACT(MONTH FROM dateRegistered))) AS BusiestMOnth FROM Pet;
+
+15)Working
+SELECT petType, AVG(cost)
+FROM Pet, Treatment, PetTreatment
+WHERE PetTreatment.treatNo=Treatment.treatNo
+GROUP BY petType;
+
+16)Working
+SELECT oFName, oLName, Pet.ownerNo, COUNT(Pet.ownerNo)
+FROM Pet, PetOwner
+WHERE Pet.ownerNo=PetOwner.ownerNo
+GROUP BY Pet.ownerNo, oFName, oLName
+HAVING COUNT(Pet.ownerNo)>1;
+
+17)Working
+SELECT drugName, inStock, reorderLevel
+FROM Pharmacy, PharmClinicStock
+WHERE Pharmacy.drugNo=PharmClinicStock.drugNo
+AND inStock<reorderLevel;
+
+18)
+SELECT oCity, SUM(cost) AS TotalCost
+FROM PetOwner, Treatment, PetTreatment, Clinic
+WHERE PetTreatment.treatNo=Treatment.treatNo
+AND PetOwner.clinicNo=Clinic.clinicNo
+GROUP BY oCity;
